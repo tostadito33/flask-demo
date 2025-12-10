@@ -33,11 +33,13 @@ class Movie(db.Model):
 
 # Crear tablas si no existen
 # Crear tablas si no existen y añadir datos iniciales
+# Crear tablas si no existen y añadir muchos datos iniciales
 with app.app_context():
     db.create_all()
 
-    # Si no hay películas todavía, añadimos unas por defecto
-    if Movie.query.count() == 0:
+    # Si hay menos de 10 películas, añadimos un catálogo grande
+    # (así, aunque ya tuvieras unas pocas, se añaden solo una vez)
+    if Movie.query.count() < 10:
         initial_movies = [
             Movie(title="Inception", genre="Ciencia ficción", rating=5, added_by="Sistema"),
             Movie(title="El Padrino", genre="Drama", rating=5, added_by="Sistema"),
@@ -45,11 +47,55 @@ with app.app_context():
             Movie(title="La La Land", genre="Musical", rating=4, added_by="Sistema"),
             Movie(title="Pulp Fiction", genre="Crimen", rating=5, added_by="Sistema"),
             Movie(title="Toy Story", genre="Animación", rating=4, added_by="Sistema"),
-            Movie(title="El Señor de los Anillos", genre="Fantasía", rating=5, added_by="Sistema"),
+            Movie(title="El Señor de los Anillos: La Comunidad del Anillo", genre="Fantasía", rating=5, added_by="Sistema"),
+            Movie(title="El Caballero Oscuro", genre="Acción", rating=5, added_by="Sistema"),
+            Movie(title="Matrix", genre="Ciencia ficción", rating=5, added_by="Sistema"),
+            Movie(title="Forrest Gump", genre="Drama", rating=5, added_by="Sistema"),
+            Movie(title="Gladiator", genre="Acción", rating=4, added_by="Sistema"),
+            Movie(title="Origen", genre="Ciencia ficción", rating=5, added_by="Sistema"),
+            Movie(title="Titanic", genre="Romance", rating=4, added_by="Sistema"),
+            Movie(title="Avatar", genre="Ciencia ficción", rating=4, added_by="Sistema"),
+            Movie(title="Joker", genre="Drama", rating=4, added_by="Sistema"),
+            Movie(title="Parásitos", genre="Thriller", rating=5, added_by="Sistema"),
+            Movie(title="Coco", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="Up", genre="Animación", rating=4, added_by="Sistema"),
+            Movie(title="Del revés (Inside Out)", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="Los Vengadores", genre="Acción", rating=4, added_by="Sistema"),
+            Movie(title="Vengadores: Endgame", genre="Acción", rating=5, added_by="Sistema"),
+            Movie(title="Spider-Man: Un nuevo universo", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="Guardianes de la Galaxia", genre="Ciencia ficción", rating=4, added_by="Sistema"),
+            Movie(title="Star Wars: Una nueva esperanza", genre="Ciencia ficción", rating=5, added_by="Sistema"),
+            Movie(title="Star Wars: El imperio contraataca", genre="Ciencia ficción", rating=5, added_by="Sistema"),
+            Movie(title="Regreso al futuro", genre="Ciencia ficción", rating=5, added_by="Sistema"),
+            Movie(title="Harry Potter y la piedra filosofal", genre="Fantasía", rating=4, added_by="Sistema"),
+            Movie(title="Harry Potter y el prisionero de Azkaban", genre="Fantasía", rating=5, added_by="Sistema"),
+            Movie(title="Piratas del Caribe: La maldición de la Perla Negra", genre="Aventura", rating=4, added_by="Sistema"),
+            Movie(title="El Rey León", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="Shrek", genre="Animación", rating=4, added_by="Sistema"),
+            Movie(title="Ratatouille", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="Buscando a Nemo", genre="Animación", rating=4, added_by="Sistema"),
+            Movie(title="Braveheart", genre="Histórica", rating=4, added_by="Sistema"),
+            Movie(title="La lista de Schindler", genre="Histórica", rating=5, added_by="Sistema"),
+            Movie(title="La vida es bella", genre="Drama", rating=5, added_by="Sistema"),
+            Movie(title="Cadena perpetua", genre="Drama", rating=5, added_by="Sistema"),
+            Movie(title="Whiplash", genre="Drama", rating=5, added_by="Sistema"),
+            Movie(title="Black Panther", genre="Acción", rating=4, added_by="Sistema"),
+            Movie(title="Mad Max: Furia en la carretera", genre="Acción", rating=5, added_by="Sistema"),
+            Movie(title="Frozen", genre="Animación", rating=4, added_by="Sistema"),
+            Movie(title="Los Increíbles", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="El viaje de Chihiro", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="Your Name", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="La forma del agua", genre="Fantástico", rating=4, added_by="Sistema"),
+            Movie(title="Bohemian Rhapsody", genre="Biográfica", rating=4, added_by="Sistema"),
+            Movie(title="Green Book", genre="Drama", rating=4, added_by="Sistema"),
+            Movie(title="Gravity", genre="Ciencia ficción", rating=4, added_by="Sistema"),
+            Movie(title="Wall-E", genre="Animación", rating=5, added_by="Sistema"),
+            Movie(title="Memento", genre="Thriller", rating=5, added_by="Sistema"),
         ]
 
         db.session.add_all(initial_movies)
         db.session.commit()
+
 
 
 
