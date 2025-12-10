@@ -1,19 +1,25 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
-import os
 
 app = Flask(__name__)
 
-# ⚙️ Clave secreta para sesiones
-# Para un trabajo de clase puedes dejarla fija
 app.config["SECRET_KEY"] = "clave-super-secreta-para-la-practica"
 
-# 📦 Configuración de la base de datos SQLite
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///movies.db"
+# 🔧 Seleccionar base de datos según el entorno
+db_uri = os.getenv("DATABASE_URL", "sqlite:///movies.db")
+
+# Render suele dar URLs que empiezan por postgres://, pero SQLAlchemy
+# prefiere postgresql:// → lo corregimos por si acaso
+if db_uri.startswith("postgres://"):
+    db_uri = db_uri.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+
 
 
 # 🗃️ Modelo de Película
