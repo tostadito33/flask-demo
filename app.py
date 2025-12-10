@@ -26,8 +26,25 @@ class Movie(db.Model):
 
 
 # Crear tablas si no existen
+# Crear tablas si no existen y añadir datos iniciales
 with app.app_context():
     db.create_all()
+
+    # Si no hay películas todavía, añadimos unas por defecto
+    if Movie.query.count() == 0:
+        initial_movies = [
+            Movie(title="Inception", genre="Ciencia ficción", rating=5, added_by="Sistema"),
+            Movie(title="El Padrino", genre="Drama", rating=5, added_by="Sistema"),
+            Movie(title="Interstellar", genre="Ciencia ficción", rating=5, added_by="Sistema"),
+            Movie(title="La La Land", genre="Musical", rating=4, added_by="Sistema"),
+            Movie(title="Pulp Fiction", genre="Crimen", rating=5, added_by="Sistema"),
+            Movie(title="Toy Story", genre="Animación", rating=4, added_by="Sistema"),
+            Movie(title="El Señor de los Anillos", genre="Fantasía", rating=5, added_by="Sistema"),
+        ]
+
+        db.session.add_all(initial_movies)
+        db.session.commit()
+
 
 
 # 🏠 Página principal: lista + búsqueda + recomendación “inteligente”
