@@ -162,6 +162,15 @@ def add_movie():
 
     return render_template("add_movie.html")
 
+@app.route("/delete/<int:movie_id>", methods=["POST"])
+def delete_movie(movie_id):
+    movie = Movie.query.get(movie_id)
+    if movie:
+        db.session.delete(movie)
+        db.session.commit()
+    return redirect(url_for("index"))
+
+
 
 # 🔐 Login sencillo con sesiones
 @app.route("/login", methods=["GET", "POST"])
