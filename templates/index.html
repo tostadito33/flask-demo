@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="mb-4">Listado de películas</h1>
+
+<!-- Formulario GET de búsqueda / filtro -->
+<form class="row g-3 mb-4" method="get" action="{{ url_for('index') }}">
+  <div class="col-md-5">
+    <input type="text" class="form-control" name="q" placeholder="Buscar por título"
+           value="{{ q }}">
+  </div>
+  <div class="col-md-5">
+    <input type="text" class="form-control" name="genre" placeholder="Filtrar por género"
+           value="{{ genre_filter }}">
+  </div>
+  <div class="col-md-2 d-grid">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </div>
+</form>
+
+<div class="mb-4">
+  <a href="{{ url_for('add_movie') }}" class="btn btn-success">➕ Añadir nueva película</a>
+</div>
+
+<!-- Recomendación “inteligente” -->
+{% if recommendation %}
+<div class="card mb-4">
+  <div class="card-header">
+    Recomendación inteligente 🎯
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      Te recomendamos ver <strong>{{ recommendation.title }}</strong>
+      (género: {{ recommendation.genre }}) porque es de las mejor valoradas.
+    </p>
+  </div>
+</div>
+{% endif %}
+
+<!-- Tabla de películas -->
+{% if movies %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Género</th>
+      <th>Puntuación</th>
+      <th>Añadida por</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for movie in movies %}
+    <tr>
+      <td>{{ movie.title }}</td>
+      <td>{{ movie.genre }}</td>
+      <td>{{ movie.rating }}</td>
+      <td>{{ movie.added_by or "-" }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No hay películas todavía. ¡Añade la primera!</p>
+{% endif %}
+
+{% endblock %}
